@@ -7,5 +7,9 @@ import { User, Mail, Award, MapPin, Settings, ChevronRight,Lock } from 'lucide-r
  */
 
 export default function Profile() {
-    
+    //State management
+    const [users, setUsers] = useState([]); //Holds full array of members from db.json
+    const [currentUser, setCurrentUser] = useState(null); //Tracks which specific member is currently being viewed
+    const [isLoggedIn, setIsLoggedIn] = useState(false);  //Switch for login wall
+    const [emailInput, setEmailInput] = useState("");     //Captures the text typed into login input in real-time
 }
