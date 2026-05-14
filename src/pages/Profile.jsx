@@ -76,7 +76,7 @@ export default function Profile() {
     const auth = emailInput.trim().toLowerCase();
     //Search our fetched users for a case-insensitive email match
     const authenticatedUser = users.find(
-      (user) => user.email?.toLowerCase() === auth,
+      (user) => user.email?.toLowerCase() === auth
     );
 
     if (authenticatedUser) {
