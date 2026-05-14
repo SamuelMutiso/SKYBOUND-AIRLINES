@@ -22,12 +22,12 @@ export default function Profile() {
     async function fetchUserData() {
       try {
         //Connects to json-server
-        const response = await fetch("localhost:3001/users");
+        const response = await fetch("http://localhost:3001/users");
         //Manual check for server response status
         if (!response.ok) {
           throw new Error("HQ Connection Failed");
         }
-        const data = await response.json;
+        const data = await response.json();
         setUsers(data);
       } catch (error) {
         console.error("Sync Error:", error.message);
@@ -138,6 +138,7 @@ export default function Profile() {
         </div>
       </div>
 
+      {/* Profile Card */}
       <div className="flex-1 space-y-10">
         <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
           <div className="h-32 bg-sky-600 w-full relative overflow-hidden">
@@ -193,6 +194,24 @@ export default function Profile() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Wallet & Flight History */}
+      <div className='grid grid-cols-2 gap-6 text-left'>
+        <div className='bg-slate-900 p-8 rounded-[2.5rem] text-white'>
+          <h3 className='font-black text-xl mb-2'>SkyPass Wallet</h3>
+          <p className='text-white/40 text-xs mb-6 font-medium'>Digital boarding passes and crypto-miles</p>
+          <button className='w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest'>
+            View All Passes
+          </button>
+        </div>
+        <div className='bg-white p-8 rounded-[2.5rem] border border-slate-100'>
+          <h3 className='font-black text-xl mb-2 text-slate-900'>Flight History</h3>
+          <p className='text-slate-400 text-xs mb-6 font-medium'>Review your past Domestic and International flights</p>
+          <button className='w-full py-4 bg-slate-50 hover:bg-slate-100 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest text-slate-900'>
+            Download Log
+          </button>
         </div>
       </div>
     </div>
