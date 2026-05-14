@@ -12,6 +12,7 @@ export default function Profile() {
   const [currentUser, setCurrentUser] = useState(null); //Tracks which specific member is currently being viewed
   const [isLoggedIn, setIsLoggedIn] = useState(false); //Switch for login wall
   const [emailInput, setEmailInput] = useState(""); //Captures the text typed into login input in real-time
+  const [loginError, setLoginError] = useState("") //New state to track failed login attempts
 
   /**
    * Phase 2: Data Fetching
