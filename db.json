@@ -1,0 +1,353 @@
+{
+  "flights": [
+    {
+      "id": "KQ-101",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Mombasa (MBA)",
+      "price": 12500,
+      "duration": "1h 00m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "QA-302",
+      "airline": "Qatar Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Madrid (MAD)",
+      "price": 85000,
+      "duration": "12h 30m",
+      "type": "International",
+      "image": "https://plus.unsplash.com/premium_photo-1697729496343-32e85c0793f0?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "JM-005",
+      "airline": "Jambojet",
+      "from": "Nairobi (NBO)",
+      "to": "Kisumu (KIS)",
+      "price": 8200,
+      "duration": "0h 50m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1690715408641-fd1d5b8931fe?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "EK-722",
+      "airline": "Emirates",
+      "from": "Nairobi (NBO)",
+      "to": "Dubai (DXB)",
+      "price": 62000,
+      "duration": "5h 15m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "ET-801",
+      "airline": "Ethiopian Airlines",
+      "from": "Nairobi (NBO)",
+      "to": "Addis Ababa (ADD)",
+      "price": 31000,
+      "duration": "1h 55m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1624314138470-5a2f24623f10?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "RY-202",
+      "airline": "Ryanair",
+      "from": "London (LHR)",
+      "to": "Paris (CDG)",
+      "price": 15000,
+      "duration": "1h 20m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "SA-411",
+      "airline": "South African Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Johannesburg (JNB)",
+      "price": 54000,
+      "duration": "4h 10m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1577948000111-9c970dfe3743?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "DL-109",
+      "airline": "Delta Airlines",
+      "from": "Nairobi (NBO)",
+      "to": "New York (JFK)",
+      "price": 115000,
+      "duration": "15h 00m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KQ-204",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Entebbe (EBB)",
+      "price": 24000,
+      "duration": "1h 15m",
+      "type": "Regional",
+      "image": "https://plus.unsplash.com/premium_photo-1697729600112-434ee1c7f670?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "AF-990",
+      "airline": "Air France",
+      "from": "Nairobi (NBO)",
+      "to": "Paris (ORY)",
+      "price": 89000,
+      "duration": "8h 45m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "JM-012",
+      "airline": "Jambojet",
+      "from": "Nairobi (NBO)",
+      "to": "Eldoret (EDL)",
+      "price": 7500,
+      "duration": "0h 45m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1663790034135-2406b09eafed?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "TK-607",
+      "airline": "Turkish Airlines",
+      "from": "Nairobi (NBO)",
+      "to": "Istanbul (IST)",
+      "price": 74000,
+      "duration": "6h 30m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KQ-551",
+      "airline": "Kenya Airways",
+      "from": "Mombasa (MBA)",
+      "to": "Zanzibar (ZNZ)",
+      "price": 18000,
+      "duration": "0h 45m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1621583628955-42fbc37bf424?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "LH-444",
+      "airline": "Lufthansa",
+      "from": "Nairobi (NBO)",
+      "to": "Frankfurt (FRA)",
+      "price": 92000,
+      "duration": "8h 15m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1626447637943-4c9d412fa8cf?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "JM-088",
+      "airline": "Jambojet",
+      "from": "Nairobi (NBO)",
+      "to": "Diani (UKA)",
+      "price": 9500,
+      "duration": "1h 10m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "QR-134",
+      "airline": "Qatar Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Tokyo (HND)",
+      "price": 145000,
+      "duration": "18h 20m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "EK-725",
+      "airline": "Emirates",
+      "from": "Nairobi (NBO)",
+      "to": "Sydney (SYD)",
+      "price": 185000,
+      "duration": "22h 10m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "RW-303",
+      "airline": "RwandAir",
+      "from": "Nairobi (NBO)",
+      "to": "Kigali (KGL)",
+      "price": 22000,
+      "duration": "1h 25m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1579518874869-1ad294d2596f?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KQ-112",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Cape Town (CPT)",
+      "price": 58000,
+      "duration": "5h 45m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "BA-065",
+      "airline": "British Airways",
+      "from": "Nairobi (NBO)",
+      "to": "London (LHR)",
+      "price": 98000,
+      "duration": "9h 00m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "JM-019",
+      "airline": "Jambojet",
+      "from": "Nairobi (NBO)",
+      "to": "Malindi (MYD)",
+      "price": 8900,
+      "duration": "1h 05m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "EY-601",
+      "airline": "Etihad Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Abu Dhabi (AUH)",
+      "price": 68000,
+      "duration": "5h 30m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-151263257869bbbc64f33?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KQ-480",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Bangkok (BKK)",
+      "price": 105000,
+      "duration": "10h 15m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1531169628939-e84f860fa5d6?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "ET-612",
+      "airline": "Ethiopian Airlines",
+      "from": "Addis Ababa (ADD)",
+      "to": "Washington (IAD)",
+      "price": 125000,
+      "duration": "14h 45m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KL-566",
+      "airline": "KLM",
+      "from": "Nairobi (NBO)",
+      "to": "Amsterdam (AMS)",
+      "price": 95000,
+      "duration": "8h 30m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KQ-001",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Lodwar (LOK)",
+      "price": 14000,
+      "duration": "1h 30m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1597675033037-b7509c61785d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "SN-455",
+      "airline": "Brussels Airlines",
+      "from": "Nairobi (NBO)",
+      "to": "Brussels (BRU)",
+      "price": 87000,
+      "duration": "8h 50m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1626013969117-8c13864fdb2d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "MS-835",
+      "airline": "EgyptAir",
+      "from": "Nairobi (NBO)",
+      "to": "Cairo (CAI)",
+      "price": 42000,
+      "duration": "4h 50m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "KQ-210",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Dar es Salaam (DAR)",
+      "price": 26000,
+      "duration": "1h 20m",
+      "type": "Regional",
+      "image": "https://images.unsplash.com/photo-1561571994-3c61c554181a?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "QA-404",
+      "airline": "Qatar Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Barcelona (BCN)",
+      "price": 83000,
+      "duration": "11h 50m",
+      "type": "International",
+      "image": "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "KQ-101",
+      "airline": "Kenya Airways",
+      "from": "Nairobi (NBO)",
+      "to": "Mombasa (MBA)",
+      "price": 12500,
+      "duration": "1h 00m",
+      "type": "Domestic",
+      "image": "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?auto=format&fit=crop&w=800&q=80",
+      "bookingDate": "13/05/2026",
+      "status": "Business Class",
+      "isUpgraded": true
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Samuel Mutiso",
+      "email": "sam.mutiso@skybound.com",
+      "tier": "Gold Member",
+      "totalMiles": 42850,
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "id": "2",
+      "name": "Roy Gitahi",
+      "email": "roy.gitahi@skybound.com",
+      "tier": "Platinum Member",
+      "totalMiles": 55200,
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "id": "3",
+      "name": "Caleb Finney",
+      "email": "caleb.finney@skybound.com",
+      "tier": "Silver Member",
+      "totalMiles": 20400,
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "id": "4",
+      "name": "Ayman Faiz",
+      "email": "ayman.faiz@skybound.com",
+      "tier": "Gold Member",
+      "totalMiles": 38900,
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80"
+    }
+  ]
+}
