@@ -106,6 +106,8 @@ export default function Profile() {
     );
   }
 
+  if (!currentUser) return null; //Prevents "cannot read property avatar of null"
+
   return (
     <div className="flex gap-10">
       {/* Phase 4: Tailwind layout (SideBar + Profile Cards) will go here */}
@@ -114,7 +116,8 @@ export default function Profile() {
           SkyBound Squad
         </h3>
         <div className="bg-white rounded-4xl border border-slate-100 p-2 shadow-sm">
-          {user.map((user) => (
+          {/* Dynamic Sidebar: maps through all squad members and applies "active" styling if ID matches 'currentUser' */}
+          {users.map((user) => (
             <button
               key={user.id}
               onClick={() => setCurrentUser(user)} //Updates view to clicked user
@@ -130,7 +133,7 @@ export default function Profile() {
                 className="w-8 h-8 rounded-lg object-cover"
               />
               <span className="text-xs font-black text-left flex-1">
-                {User.name.split(" ")[0]}
+                {user.name.split(" ")[0]}
               </span>
               {currentUser.id === user.id && <ChevronRight size={14} />}
             </button>
@@ -138,8 +141,8 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Profile Card */}
       <div className="flex-1 space-y-10">
+        {/* Profile Card */}
         <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
           <div className="h-32 bg-sky-600 w-full relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent]"></div>
@@ -147,6 +150,7 @@ export default function Profile() {
           <div className="px-12 pb-12">
             <div className="relative -my-16">
               <img
+                //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
                 src={currentUser.avatar}
                 alt={currentUser.name}
                 className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
@@ -177,6 +181,7 @@ export default function Profile() {
                 </p>
               </div>
               <div className="space-y-1">
+                {/* Metric display: Renders raw numerical data from db.json with descriptive units */}
                 <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
                   Total Miles
                 </p>
@@ -195,23 +200,28 @@ export default function Profile() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Wallet & Flight History */}
-      <div className='grid grid-cols-2 gap-6 text-left'>
-        <div className='bg-slate-900 p-8 rounded-[2.5rem] text-white'>
-          <h3 className='font-black text-xl mb-2'>SkyPass Wallet</h3>
-          <p className='text-white/40 text-xs mb-6 font-medium'>Digital boarding passes and crypto-miles</p>
-          <button className='w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest'>
-            View All Passes
-          </button>
-        </div>
-        <div className='bg-white p-8 rounded-[2.5rem] border border-slate-100'>
-          <h3 className='font-black text-xl mb-2 text-slate-900'>Flight History</h3>
-          <p className='text-slate-400 text-xs mb-6 font-medium'>Review your past Domestic and International flights</p>
-          <button className='w-full py-4 bg-slate-50 hover:bg-slate-100 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest text-slate-900'>
-            Download Log
-          </button>
+        {/* Wallet & Flight History */}
+        <div className="grid grid-cols-2 gap-6 text-left">
+          <div className="bg-slate-900 p-8 rounded-[2.5rem] text-white">
+            <h3 className="font-black text-xl mb-2">SkyPass Wallet</h3>
+            <p className="text-white/40 text-xs mb-6 font-medium">
+              Digital boarding passes and crypto-miles
+            </p>
+            <button className="w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest">
+              View All Passes
+            </button>
+          </div>
+          <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100">
+            <h3 className="font-black text-xl mb-2 text-slate-900">
+              Flight History
+            </h3>
+            <p className="text-slate-400 text-xs mb-6 font-medium">
+              Review your past Domestic and International flights
+            </p>
+            <button className="w-full py-4 bg-slate-50 hover:bg-slate-100 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest text-slate-900">
+              Download Log
+            </button>
+          </div>
         </div>
       </div>
     </div>
