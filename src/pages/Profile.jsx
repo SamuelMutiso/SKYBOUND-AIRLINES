@@ -25,8 +25,8 @@ export default function Profile() {
     async function fetchUserData() {
       try {
         //Connects to json-server
-        const userResponse = await fetch("http://localhost:3001/users");
-        const bookingsResponse = await fetch("http://localhost:3001/bookings"); //Fetch flight history data
+        const userResponse = await fetch("http://127.0.0.1:3001/users");
+        const bookingsResponse = await fetch("http://127.0.0.1:3001/bookings"); //Fetch flight history data
         //Manual check for server response status
         if (!userResponse.ok) {
           throw new Error("Failed to fetch users data from HQ");
@@ -97,7 +97,7 @@ export default function Profile() {
   const handleUpdatedProfile = async (e) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${currentUser.id}`,
+        `http://127.0.0.1:3001/users/${currentUser.id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -246,7 +246,7 @@ export default function Profile() {
               <img
                 //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
                 src={currentUser?.avatar}
-                alt={currentUser.name}
+                alt={currentUser?.name}
                 className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
               />
               <div className="absolute bottom-0 left-24 bg-emerald-500 border-4 border-white w-8 h-8 rounded-full"></div>
@@ -276,7 +276,7 @@ export default function Profile() {
                 ) : (
                   <>
                     <h1 className="text-3xl font-black text-slate-900 tracking-tighter">
-                      {currentUser.name}
+                      {currentUser?.name}
                     </h1>
                     <p className="text-slate-400 font-bold flex items-center gap-2 text-sm">
                       <MapPin size={16} /> SkyBound HQ, Nairobi
@@ -300,7 +300,7 @@ export default function Profile() {
                   Membership
                 </p>
                 <p className="text-sky-600 font-black flex items-center gap-2">
-                  <Award size={18} /> {currentUser.tier}
+                  <Award size={18} /> {currentUser?.tier}
                 </p>
               </div>
               <div className="space-y-1">
@@ -317,7 +317,7 @@ export default function Profile() {
                   SkyID
                 </p>
                 <p className="text-slate-900 font-bold text-sm underline opacity-60">
-                  {currentUser.email}
+                  {currentUser?.email}
                 </p>
               </div>
             </div>
