@@ -47,7 +47,7 @@ export default function Profile() {
     const auth = emailInput.toLowerCase();
     //Search our fetched users for a case-insensitive eamil match
     const authenticatedUser = users.find(
-      (user) => user.email.toLowerCase() === auth
+      (user) => user.email.toLowerCase() === auth,
     );
 
     if (authenticatedUser) {
@@ -107,13 +107,41 @@ export default function Profile() {
   }
 
   return (
-    <div className="p-10">
+    <div className="flex gap-10">
       {/* Phase 4: Tailwind layout (SideBar + Profile Cards) will go here */}
-      <div className="animate-pulse flex flex-col gap-4 text-left">
-        <div className="h-8 w-48 bg-slate-100 rounded-full"></div>
-        <p className="text-slate-400 fonnt-bold italic">
-          Access Granted. Synchronizing with SkyBound HQ...
-        </p>
+      <div className="w-64 space-y-4">
+        <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] px-4">
+          SkyBound Squad
+        </h3>
+        <div className="bg-white rounded-4xl border border-slate-100 p-2 shadow-sm">
+          {user.map((user) => (
+            <button
+              key={user.id}
+              onClick={() => setCurrentUser(user)} //Updates view to clicked user
+              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition all ${
+                currentUser.id === user.id
+                  ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
+                  : "text-slate-400 hover:bg-slate-50" //Status: Inactive
+              }`}
+            >
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="w-8 h-8 rounded-lg object-cover"
+              />
+              <span className="text-xs font-black text-left flex-1">
+                {User.name.split(" ")[0]}
+              </span>
+              {currentUser.id === user.id && <ChevronRight size={14} />}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex-1">
+        {" "}
+        {/**Placeholder for step 2: Main Profile goes here */}
+        <p className="text-slate-400 font bold italic">Synchronizing...</p>
       </div>
     </div>
   );
