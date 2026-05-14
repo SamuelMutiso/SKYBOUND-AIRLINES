@@ -97,7 +97,7 @@ export default function Profile() {
   const handleUpdatedProfile = async (e) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:3001/users/${currentUser.id}`,
+        `http://127.0.0.1:3001/users/${currentUser?.id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
