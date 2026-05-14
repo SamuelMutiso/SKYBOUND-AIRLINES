@@ -7,6 +7,9 @@ import { Award, MapPin, Settings, ChevronRight, Lock, LogOut, Check, X } from 'l
  */
 
 export default function Profile() {
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
   //State management
   const [users, setUsers] = useState([]); //Holds full array of members from db.json
   const [currentUser, setCurrentUser] = useState(null); //Tracks which specific member is currently being viewed
@@ -25,8 +28,8 @@ export default function Profile() {
     async function fetchUserData() {
       try {
         //Connects to json-server
-        const userResponse = await fetch("http://127.0.0.1:3001/users");
-        const bookingsResponse = await fetch("http://127.0.0.1:3001/bookings"); //Fetch flight history data
+        const userResponse = await fetch(`${API_URL}/users`);
+        const bookingsResponse = await fetch(`${API_URL}/bookings`); //Fetch flight history data
         //Manual check for server response status
         if (!userResponse.ok) {
           throw new Error("Failed to fetch users data from HQ");
@@ -97,7 +100,7 @@ export default function Profile() {
   const handleUpdatedProfile = async (e) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:3001/users/${currentUser?.id}`,
+        `${API_URL}/users/${currentUser?.id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
