@@ -12,7 +12,7 @@ export default function Profile() {
   const [currentUser, setCurrentUser] = useState(null); //Tracks which specific member is currently being viewed
   const [isLoggedIn, setIsLoggedIn] = useState(false); //Switch for login wall
   const [emailInput, setEmailInput] = useState(""); //Captures the text typed into login input in real-time
-  const [loginError, setLoginError] = useState("") //New state to track failed login attempts
+  const [loginError, setLoginError] = useState(""); //New state to track failed login attempts
 
   /**
    * Phase 2: Data Fetching
@@ -41,6 +41,23 @@ export default function Profile() {
    * Phase 3: Authentication logic
    * Here, we'll define 'handleLogin' to verify 'emailInput' against users array, before flipping 'isLoggedIn' to true
    */
+  const handleLogin = (e) => {
+    e.preventDefault(); //Prevents browser from reloading page
+    
+    const auth = emailInput.toLowerCase();
+    //Search our fetched users for a case-insensitive eamil match
+    const authenticatedUser = users.find((user) => user.email.toLowerCase() === auth);
+    
+    if (authenticatedUser) {
+        //Update identity and lift Gatekeeper wall
+        setCurrentUser(authenticatedUser);
+        setIsLoggedIn(true); 
+        setLoginError(""); //Clear any previous errors on success
+    }
+    else {
+        setLoginError("Invalid SkyID. Please check your email and try again.");
+    }
+  }
 
   // GATEKEEPER
   if (!isLoggedIn) {
