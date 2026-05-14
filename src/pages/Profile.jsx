@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Award, MapPin, Settings, ChevronRight,Lock, LogOut, Check, X } from 'lucide-react';
+import { Award, MapPin, Settings, ChevronRight,Lock, LogOut, Check, X } from 'lucide-react';
 
 /**
  * Profile component
@@ -237,16 +237,16 @@ export default function Profile() {
       {/* Main Content */}
       <div className="flex-1 space-y-10">
         {/* Profile Card */}
-        <div className="bg-white rounded-[3rem] border border-slate-100 overflow-hidden shadow-sm text-left">
+        <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
           <div className="h-32 bg-sky-600 w-full relative overflow-hidden">
-            <div className="absolute inset-0 opacity-5 bg-white"></div>
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
           </div>
           <div className="px-12 pb-12">
             <div className="relative -my-16 mb-6">
               <img
                 //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
-                src={currentUser?.avatar || "https://via.placeholder.com/128"}
-                alt={currentUser?.name || "User"}
+                src={currentUser.avatar}
+                alt={currentUser.name}
                 className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
               />
               <div className="absolute bottom-0 left-24 bg-emerald-500 border-4 border-white w-8 h-8 rounded-full"></div>
@@ -340,21 +340,17 @@ export default function Profile() {
             </h3>
             <div className="space-y-2 mb-4">
               {/* Tiny preview of fetched bookings */}
-              {bookings && bookings.length > 0 ? (
-                bookings.slice(0, 2).map((b) => (
-                  <div
-                    key={b.id}
-                    className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
-                  >
-                    <span>
-                      {b.from} ✈️ {b.to}
-                    </span>
-                    <span className="text-sky-600">{b.bookingDate}</span>
-                  </div>
-                ))
-              ) : (
-                <p className="text-slate-400 text-[10px]">No flights booked yet</p>
-              )}
+              {bookings.slice(0, 2).map((b) => (
+                <div
+                  key={b.id}
+                  className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
+                >
+                  <span>
+                    {b.from} ✈️ {b.to}
+                  </span>
+                  <span className="text-sky-600">{b.bookingDate}</span>
+                </div>
+              ))}
             </div>
             <button className="w-full py-4 bg-slate-50 hover:bg-slate-100 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest text-slate-900">
               Download Log
