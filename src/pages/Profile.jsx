@@ -97,7 +97,7 @@ export default function Profile() {
 
           <button
             type="submit"
-            className="w-full py-5 bg-slate-900 text-white rounded-2xl font-black hover:bg-sky-600 transition-all shadow-lg shadow-slate-200 uppercase tracking-widest tesxt-xs"
+            className="w-full py-5 bg-slate-900 text-white rounded-2xl font-black hover:bg-sky-600 transition-all shadow-lg shadow-slate-200 uppercase tracking-widest text-xs"
           >
             Authorize Access
           </button>
@@ -106,22 +106,31 @@ export default function Profile() {
     );
   }
 
-  if (!currentUser) return null; //Prevents "cannot read property avatar of null"
+  if (!currentUser) {
+    return (
+      <div className='flex items-center justify-center min-h-[60vh] text-slate-400 font-black uppercase tracking-widest animate-pulse'>
+        <div className='text-center'>
+          <p className='text-4xl mb-4'>✈️</p>
+          <p>Initializing Flight Systems...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex gap-10">
-      {/* Phase 4: Tailwind layout (SideBar + Profile Cards) will go here */}
+      {/* Sidebar Navigation */}
       <div className="w-64 space-y-4">
         <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] px-4">
           SkyBound Squad
         </h3>
-        <div className="bg-white rounded-4xl border border-slate-100 p-2 shadow-sm">
+        <nav className="bg-white rounded-4xl border border-slate-100 p-2 shadow-sm">
           {/* Dynamic Sidebar: maps through all squad members and applies "active" styling if ID matches 'currentUser' */}
           {users.map((user) => (
             <button
               key={user.id}
               onClick={() => setCurrentUser(user)} //Updates view to clicked user
-              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition all ${
+              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
                 currentUser.id === user.id
                   ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
                   : "text-slate-400 hover:bg-slate-50" //Status: Inactive
@@ -130,7 +139,7 @@ export default function Profile() {
               <img
                 src={user.avatar}
                 alt={user.name}
-                className="w-8 h-8 rounded-lg object-cover"
+                className="w-8 h-8 rounded-lg object-cover grayscale-[0.5] contrast-125"
               />
               <span className="text-xs font-black text-left flex-1">
                 {user.name.split(" ")[0]}
@@ -138,9 +147,10 @@ export default function Profile() {
               {currentUser.id === user.id && <ChevronRight size={14} />}
             </button>
           ))}
-        </div>
+        </nav>
       </div>
 
+      {/* Main Content */}
       <div className="flex-1 space-y-10">
         {/* Profile Card */}
         <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
@@ -148,7 +158,7 @@ export default function Profile() {
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent]"></div>
           </div>
           <div className="px-12 pb-12">
-            <div className="relative -my-16">
+            <div className="relative -my-16 mb-6">
               <img
                 //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
                 src={currentUser.avatar}
@@ -166,7 +176,7 @@ export default function Profile() {
                   <MapPin size={16} /> SkyBound HQ, Nairobi
                 </p>
               </div>
-              <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 roinded-2xl font-black text-xs hover:bg-sky-600 transition-all shadow-lg shadow-slate-200">
+              <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-xs hover:bg-sky-600 transition-all shadow-lg shadow-slate-200">
                 <Settings size={16} /> Edit Profile
               </button>
             </div>
@@ -186,7 +196,7 @@ export default function Profile() {
                   Total Miles
                 </p>
                 <p className="text-slate-900 font-black italic">
-                  {currentUser.totalMiles}
+                  {currentUser.totalMiles.toLocaleString()}
                 </p>
               </div>
               <div className="space-y-1">
