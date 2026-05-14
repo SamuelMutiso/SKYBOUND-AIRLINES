@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Award, MapPin, Settings, ChevronRight,Lock, LogOut, Check, X } from 'lucide-react';
+import {  Award, MapPin, Settings, ChevronRight,Lock, LogOut, Check, X } from 'lucide-react';
 
 /**
  * Profile component
