@@ -28,8 +28,11 @@ export default function Profile() {
         const userResponse = await fetch("http://localhost:3001/users");
         const bookingsResponse = await fetch("http://localhost:3001/bookings"); //Fetch flight history data
         //Manual check for server response status
-        if (!userResponse.ok || !bookingsResponse.ok) {
-          throw new Error("Connection to HQ Failed");
+        if (!userResponse.ok) {
+          throw new Error("Failed to fetch users data from HQ");
+        }
+        if (!bookingsResponse.ok) {
+          throw new Error("Failed to fetch bookings data from HQ");
         }
         const userData = await userResponse.json();
         const bookingsData = await bookingsResponse.json();
@@ -192,31 +195,35 @@ export default function Profile() {
         </h3>
         <nav className="bg-white rounded-4xl border border-slate-100 p-2 shadow-sm">
           {/* Dynamic Sidebar: maps through all squad members and applies "active" styling if ID matches 'currentUser' */}
-          {users.map((user) => (
-            <button
-              key={user.id}
-              onClick={() => {
-                setCurrentUser(user);
-                setEditName(user.name); //Updates view to clicked user
-                setIsEditing(false); //Closes edit box automatically
-              }}
-              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
-                currentUser.id === user.id
-                  ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
-                  : "text-slate-400 hover:bg-slate-50" //Status: Inactive
-              }`}
-            >
-              <img
-                src={user.avatar}
-                alt={user.name}
-                className="w-8 h-8 rounded-lg object-cover grayscale-0 contrast-125"
-              />
-              <span className="text-xs font-black text-left flex-1">
-                {user.name.split(" ")[0]}
-              </span>
-              {currentUser.id === user.id && <ChevronRight size={14} />}
-            </button>
-          ))}
+          {users && users.length > 0 ? (
+            users.map((user) => (
+              <button
+                key={user.id}
+                onClick={() => {
+                  setCurrentUser(user);
+                  setEditName(user.name); //Updates view to clicked user
+                  setIsEditing(false); //Closes edit box automatically
+                }}
+                className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
+                  currentUser?.id === user.id
+                    ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
+                    : "text-slate-400 hover:bg-slate-50" //Status: Inactive
+                }`}
+              >
+                <img
+                  src={user.avatar || "https://via.placeholder.com/32"}
+                  alt={user.name || "User"}
+                  className="w-8 h-8 rounded-lg object-cover grayscale-0 contrast-125"
+                />
+                <span className="text-xs font-black text-left flex-1">
+                  {user.name ? user.name.split(" ")[0] : "User"}
+                </span>
+                {currentUser?.id === user.id && <ChevronRight size={14} />}
+              </button>
+            ))
+          ) : (
+            <p className="text-slate-400 text-xs p-4">Loading squad...</p>
+          )}
         </nav>
         {/* Logout Button */}
         <button
@@ -230,16 +237,16 @@ export default function Profile() {
       {/* Main Content */}
       <div className="flex-1 space-y-10">
         {/* Profile Card */}
-        <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
+        <div className="bg-white rounded-[3rem] border border-slate-100 overflow-hidden shadow-sm text-left">
           <div className="h-32 bg-sky-600 w-full relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+            <div className="absolute inset-0 opacity-5 bg-white"></div>
           </div>
           <div className="px-12 pb-12">
             <div className="relative -my-16 mb-6">
               <img
                 //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
-                src={currentUser.avatar}
-                alt={currentUser.name}
+                src={currentUser?.avatar || "https://via.placeholder.com/128"}
+                alt={currentUser?.name || "User"}
                 className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
               />
               <div className="absolute bottom-0 left-24 bg-emerald-500 border-4 border-white w-8 h-8 rounded-full"></div>
@@ -333,17 +340,21 @@ export default function Profile() {
             </h3>
             <div className="space-y-2 mb-4">
               {/* Tiny preview of fetched bookings */}
-              {bookings.slice(0, 2).map((b) => (
-                <div
-                  key={b.id}
-                  className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
-                >
-                  <span>
-                    {b.from} ✈️ {b.to}
-                  </span>
-                  <span className="text-sky-600">{b.bookingDate}</span>
-                </div>
-              ))}
+              {bookings && bookings.length > 0 ? (
+                bookings.slice(0, 2).map((b) => (
+                  <div
+                    key={b.id}
+                    className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
+                  >
+                    <span>
+                      {b.from} ✈️ {b.to}
+                    </span>
+                    <span className="text-sky-600">{b.bookingDate}</span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-slate-400 text-[10px]">No flights booked yet</p>
+              )}
             </div>
             <button className="w-full py-4 bg-slate-50 hover:bg-slate-100 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest text-slate-900">
               Download Log
