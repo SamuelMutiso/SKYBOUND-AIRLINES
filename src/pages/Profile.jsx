@@ -53,7 +53,7 @@ export default function Profile() {
           }
         }
       } catch (error) {
-        console.error("Sync Error:", error.message);
+        console.error("Sync Error:", error?.message);
       }
     }
 
@@ -68,9 +68,9 @@ export default function Profile() {
     e.preventDefault(); //Prevents browser from reloading page
 
     const auth = emailInput.trim().toLowerCase();
-    //Search our fetched users for a case-insensitive eamil match
+    //Search our fetched users for a case-insensitive email match
     const authenticatedUser = users.find(
-      (user) => user.email.toLowerCase() === auth,
+      (user) => user.email?.toLowerCase() === auth,
     );
 
     if (authenticatedUser) {
@@ -122,6 +122,7 @@ export default function Profile() {
     setCurrentUser(null);
     setIsLoggedIn(false);
     setEmailInput("");
+    setLoginError("");
   };
 
   // GATEKEEPER
