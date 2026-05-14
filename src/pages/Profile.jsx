@@ -28,8 +28,8 @@ export default function Profile() {
         const userResponse = await fetch("http://localhost:3001/users");
         const bookingsResponse = await fetch("http://localhost:3001/bookings"); //Fetch flight history data
         //Manual check for server response status
-        if (!userResponse.ok) {
-          throw new Error("HQ Connection Failed");
+        if (!userResponse.ok || !bookingsResponse.ok) {
+          throw new Error("Connection to HQ Failed");
         }
         const userData = await userResponse.json();
         const bookingsData = await bookingsResponse.json();

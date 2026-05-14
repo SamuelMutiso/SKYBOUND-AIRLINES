@@ -13,11 +13,13 @@ export default function Home() {
   }, []);
 
   const handleBook = (flight) => {
+    // Destructure to remove the flight ID so json-server generates a unique booking ID
+    const { id, ...flightData } = flight;
     fetch("http://localhost:3001/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
-        ...flight, 
+        ...flightData, 
         bookingDate: new Date().toLocaleDateString(), 
         status: "Economy Confirmed",
         isUpgraded: false 
@@ -44,6 +46,7 @@ export default function Home() {
             type="text" 
             placeholder="Where are you flying to?" 
             className="w-full p-5 rounded-2xl text-slate-900 font-bold outline-none shadow-2xl focus:ring-4 focus:ring-sky-300 transition-all"
+            value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           
@@ -121,4 +124,3 @@ export default function Home() {
     </div>
   );
 }
-
