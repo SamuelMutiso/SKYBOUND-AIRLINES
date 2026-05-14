@@ -22,11 +22,11 @@ export default function Profile() {
     async function fetchUserData() {
       try {
         //Connects to json-server
-        const response = await fetch("localhost:3001/users"); 
+        const response = await fetch("localhost:3001/users");
         //Manual check for server response status
         if (!response.ok) {
           throw new Error("HQ Connection Failed");
-        } 
+        }
         const data = await response.json;
         setUsers(data);
       } catch (error) {
@@ -43,30 +43,31 @@ export default function Profile() {
    */
   const handleLogin = (e) => {
     e.preventDefault(); //Prevents browser from reloading page
-    
+
     const auth = emailInput.toLowerCase();
     //Search our fetched users for a case-insensitive eamil match
-    const authenticatedUser = users.find((user) => user.email.toLowerCase() === auth);
-    
+    const authenticatedUser = users.find(
+      (user) => user.email.toLowerCase() === auth
+    );
+
     if (authenticatedUser) {
-        //Update identity and lift Gatekeeper wall
-        setCurrentUser(authenticatedUser);
-        setIsLoggedIn(true); 
-        setLoginError(""); //Clear any previous errors on success
+      //Update identity and lift Gatekeeper wall
+      setCurrentUser(authenticatedUser);
+      setIsLoggedIn(true);
+      setLoginError(""); //Clear any previous errors on success
+    } else {
+      setLoginError("Invalid SkyID. Please check your email and try again.");
     }
-    else {
-        setLoginError("Invalid SkyID. Please check your email and try again.");
-    }
-  }
+  };
 
   // GATEKEEPER
   if (!isLoggedIn) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         {/* Phase 3 logic goes here; onSubmit will go here*/}
-        <form 
-            onSubmit={handleLogin}    //Added onSubmit listener to trigger phase 3 logic 
-            className="bg-white p-12 rounded-[3rem] shadow-xl border border-slate-100 w-full max-w-md"
+        <form
+          onSubmit={handleLogin} //Added onSubmit listener to trigger phase 3 logic
+          className="bg-white p-12 rounded-[3rem] shadow-xl border border-slate-100 w-full max-w-md"
         >
           <div className="bg-sky-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-sky-200">
             <Lock size={28} />
@@ -89,8 +90,8 @@ export default function Profile() {
 
           {/* Phase 3: conditional error message for failed logins go here */}
           {loginError && (
-            <p className='text-rose-500 text-[10px] font-black uppercase tracking-widest mb-4 px-2 animate-bounce'>
-               ⚠️ {loginError}
+            <p className="text-rose-500 text-[10px] font-black uppercase tracking-widest mb-4 px-2 animate-bounce">
+              ⚠️ {loginError}
             </p>
           )}
 
