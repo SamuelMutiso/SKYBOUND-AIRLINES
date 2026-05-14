@@ -67,7 +67,7 @@ export default function Profile() {
   const handleLogin = (e) => {
     e.preventDefault(); //Prevents browser from reloading page
 
-    const auth = emailInput.toLowerCase();
+    const auth = emailInput.trim().toLowerCase();
     //Search our fetched users for a case-insensitive eamil match
     const authenticatedUser = users.find(
       (user) => user.email.toLowerCase() === auth,
@@ -76,6 +76,7 @@ export default function Profile() {
     if (authenticatedUser) {
       //Update identity and lift Gatekeeper wall
       setCurrentUser(authenticatedUser);
+      setEditName(authenticatedUser.name);
       setIsLoggedIn(true);
       setLoginError(""); //Clear any previous errors on success
       //Phase 4: Persistence Logic - Save successful SkyID to localStorage for future sessions
@@ -140,13 +141,14 @@ export default function Profile() {
             SkyBound Portal
           </h2>
           <p className="text-slate-400 font-bold mb-8 italic text-sm text-left">
-            Welcome to SkyBound. Please sign in to access your flight dashoard.
+            Welcome to SkyBound. Please sign in to access your flight dashboard.
           </p>
 
           <input
             type="email"
             placeholder="Enter your Email (SkyID)"
             className="w-full p-5 rounded-2xl bg-slate-50 border-none focus:ring-4 focus:ring-sky-100 font-bold mb-4 placeholder:text-slate-300 text-slate-900"
+            value={emailInput}
             onChange={(e) => setEmailInput(e.target.value)}
             required
           />
@@ -299,7 +301,7 @@ export default function Profile() {
                   Total Miles
                 </p>
                 <p className="text-slate-900 font-black italic">
-                  {currentUser.totalMiles.toLocaleString() || 0}
+                  {currentUser?.totalMiles?.toLocaleString() || 0}
                 </p>
               </div>
               <div className="space-y-1">
