@@ -322,7 +322,7 @@
       "name": "Samuel Mutiso",
       "email": "sam.mutiso@skybound.com",
       "tier": "Gold Member",
-      "totalMiles": "42,850",
+      "totalMiles": 42850,
       "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
     },
     {
@@ -330,7 +330,7 @@
       "name": "Roy Gitahi",
       "email": "roy.gitahi@skybound.com",
       "tier": "Platinum Member",
-      "totalMiles": "55,200",
+      "totalMiles": 55200,
       "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80"
     },
     {
@@ -338,7 +338,7 @@
       "name": "Caleb Finney",
       "email": "caleb.finney@skybound.com",
       "tier": "Silver Member",
-      "totalMiles": "20,400",
+      "totalMiles": 20400,
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
     },
     {
@@ -346,7 +346,7 @@
       "name": "Ayman Faiz",
       "email": "ayman.faiz@skybound.com",
       "tier": "Gold Member",
-      "totalMiles": "38,900",
+      "totalMiles": 38900,
       "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80"
     }
   ]
