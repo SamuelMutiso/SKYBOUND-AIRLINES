@@ -138,10 +138,62 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="flex-1">
-        {" "}
-        {/**Placeholder for step 2: Main Profile goes here */}
-        <p className="text-slate-400 font bold italic">Synchronizing...</p>
+      <div className="flex-1 space-y-10">
+        <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
+          <div className="h-32 bg-sky-600 w-full relative overflow-hidden">
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent]"></div>
+          </div>
+          <div className="px-12 pb-12">
+            <div className="relative -my-16">
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.name}
+                className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
+              />
+              <div className="absolute bottom-0 left-24 bg-emerald-500 border-4 border-white w-8 h-8 rounded-full"></div>
+            </div>
+            <div className="flex justify-between items-end">
+              <div className="space-y-1">
+                <h1 className="text-3xl font-black text-slate-900 tracking-tighter">
+                  {currentUser.name}
+                </h1>
+                <p className="text-slate-400 font-bold flex items-center gap-2 text-sm">
+                  <MapPin size={16} /> SkyBound HQ, Nairobi
+                </p>
+              </div>
+              <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 roinded-2xl font-black text-xs hover:bg-sky-600 transition-all shadow-lg shadow-slate-200">
+                <Settings size={16} /> Edit Profile
+              </button>
+            </div>
+            {/* Data Grid: Membership, Miles, SkyID */}
+            <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-slate-50">
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
+                  Membership
+                </p>
+                <p className="text-sky-600 font-black flex items-center gap-2">
+                  <Award size={18} /> {currentUser.tier}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
+                  Total Miles
+                </p>
+                <p className="text-slate-900 font-black italic">
+                  {currentUser.totalMiles}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
+                  SkyID
+                </p>
+                <p className="text-slate-900 font-bold text-sm underline opacity-60">
+                  {currentUser.email}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
