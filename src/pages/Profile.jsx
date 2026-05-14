@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Award, MapPin, Settings, ChevronRight,Lock } from 'lucide-react';
+import { User, Mail, Award, MapPin, Settings, ChevronRight,Lock, LogOut, Check, X } from 'lucide-react';
 
 /**
  * Profile component
@@ -13,6 +13,9 @@ export default function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); //Switch for login wall
   const [emailInput, setEmailInput] = useState(""); //Captures the text typed into login input in real-time
   const [loginError, setLoginError] = useState(""); //New state to track failed login attempts
+  const [bookings, setBookings] = useState([]); //State to hold user's flight history
+  const [isEditing, setIsEditing] = useState(false); //State to toggle edit mode for profile details
+  const [editName, setEditName] = useState(""); //Temporary state for name change
 
   /**
    * Phase 2: Data Fetching
@@ -22,13 +25,33 @@ export default function Profile() {
     async function fetchUserData() {
       try {
         //Connects to json-server
-        const response = await fetch("http://localhost:3001/users");
+        const userResponse = await fetch("http://localhost:3001/users");
+        const bookingsResponse = await fetch("http://localhost:3001/bookings"); //Fetch flight history data
         //Manual check for server response status
-        if (!response.ok) {
+        if (!userResponse.ok) {
           throw new Error("HQ Connection Failed");
         }
-        const data = await response.json();
-        setUsers(data);
+        const userData = await userResponse.json();
+        const bookingsData = await bookingsResponse.json();
+
+        setUsers(userData);
+        setBookings(bookingsData); //Store flight history in state
+
+        /**
+         * Phase 4: Persistence Check
+         * After fetching users, check if a SkyID is saved in the browser.
+         */
+        const savedEmail = localStorage.getItem("skyBound_session");
+        if (savedEmail) {
+          const existingUser = userData.find(
+            (user) => user.email.toLowerCase() === savedEmail.toLowerCase(),
+          );
+          if (existingUser) {
+            setCurrentUser(existingUser);
+            setEditName(existingUser.name);
+            setIsLoggedIn(true);
+          }
+        }
       } catch (error) {
         console.error("Sync Error:", error.message);
       }
@@ -55,9 +78,49 @@ export default function Profile() {
       setCurrentUser(authenticatedUser);
       setIsLoggedIn(true);
       setLoginError(""); //Clear any previous errors on success
+      //Phase 4: Persistence Logic - Save successful SkyID to localStorage for future sessions
+      localStorage.setItem("skyBound_session", authenticatedUser.email);
     } else {
       setLoginError("Invalid SkyID. Please check your email and try again.");
     }
+  };
+
+  /**
+   * Phase 5: Logout Logic
+   * clears session data and resets state to lock profile back down
+   */
+
+  const handleUpdatedProfile = async (e) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/users/${currentUser.id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: editName }),
+        },
+      );
+
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setCurrentUser(updatedUser);
+        setUsers(
+          users.map((user) =>
+            user.id === updatedUser.id ? updatedUser : user,
+          ),
+        ); //Update users array with new name
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error("Update Error:", error);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("skyBound_session");
+    setCurrentUser(null);
+    setIsLoggedIn(false);
+    setEmailInput("");
   };
 
   // GATEKEEPER
@@ -83,7 +146,7 @@ export default function Profile() {
           <input
             type="email"
             placeholder="Enter your Email (SkyID)"
-            className="w-full p-5 rounded-2xl bg-slate-50 border-none focus:ring-4 focus:ring-sky-100 font bold mb-4 placeholder:text-slate-300 text-slate-900"
+            className="w-full p-5 rounded-2xl bg-slate-50 border-none focus:ring-4 focus:ring-sky-100 font-bold mb-4 placeholder:text-slate-300 text-slate-900"
             onChange={(e) => setEmailInput(e.target.value)}
             required
           />
@@ -108,9 +171,9 @@ export default function Profile() {
 
   if (!currentUser) {
     return (
-      <div className='flex items-center justify-center min-h-[60vh] text-slate-400 font-black uppercase tracking-widest animate-pulse'>
-        <div className='text-center'>
-          <p className='text-4xl mb-4'>✈️</p>
+      <div className="flex items-center justify-center min-h-[60vh] text-slate-400 font-black uppercase tracking-widest animate-pulse">
+        <div className="text-center">
+          <p className="text-4xl mb-4">✈️</p>
           <p>Initializing Flight Systems...</p>
         </div>
       </div>
@@ -129,7 +192,11 @@ export default function Profile() {
           {users.map((user) => (
             <button
               key={user.id}
-              onClick={() => setCurrentUser(user)} //Updates view to clicked user
+              onClick={() => {
+                setCurrentUser(user);
+                setEditName(user.name); //Updates view to clicked user
+                setIsEditing(false); //Closes edit box automatically
+              }}
               className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
                 currentUser.id === user.id
                   ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
@@ -139,7 +206,7 @@ export default function Profile() {
               <img
                 src={user.avatar}
                 alt={user.name}
-                className="w-8 h-8 rounded-lg object-cover grayscale-[0.5] contrast-125"
+                className="w-8 h-8 rounded-lg object-cover grayscale-0 contrast-125"
               />
               <span className="text-xs font-black text-left flex-1">
                 {user.name.split(" ")[0]}
@@ -148,6 +215,13 @@ export default function Profile() {
             </button>
           ))}
         </nav>
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-rose-500 text-white px-6 py-3 rounded-2xl font-black text-xs hover:bg-rose-600 transition-all shadow-lg shadow-slate-200"
+        >
+          <LogOut size={18} /> Logout
+        </button>
       </div>
 
       {/* Main Content */}
@@ -155,7 +229,7 @@ export default function Profile() {
         {/* Profile Card */}
         <div className="bg-white rounded-[3rem] border-slate-100 overflow-hidden shadow-sm text-left">
           <div className="h-32 bg-sky-600 w-full relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent]"></div>
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
           </div>
           <div className="px-12 pb-12">
             <div className="relative -my-16 mb-6">
@@ -169,16 +243,45 @@ export default function Profile() {
             </div>
             <div className="flex justify-between items-end">
               <div className="space-y-1">
-                <h1 className="text-3xl font-black text-slate-900 tracking-tighter">
-                  {currentUser.name}
-                </h1>
-                <p className="text-slate-400 font-bold flex items-center gap-2 text-sm">
-                  <MapPin size={16} /> SkyBound HQ, Nairobi
-                </p>
+                {isEditing ? (
+                  <div className="flex items-center gap-2">
+                    <input
+                      className="text-3xl font-black text-slate-900 tracking-tighter border-b-2 border-sky-500 outline-none"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                    />
+                    <button
+                      onClick={handleUpdatedProfile}
+                      className="p-2 bg-emerald-500 text-white rounded-lg"
+                    >
+                      <Check size={16} />
+                    </button>
+                    <button
+                      onClick={() => setIsEditing(false)}
+                      className="p-2 bg-slate-200 text-slate-600 rounded-lg"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tighter">
+                      {currentUser.name}
+                    </h1>
+                    <p className="text-slate-400 font-bold flex items-center gap-2 text-sm">
+                      <MapPin size={16} /> SkyBound HQ, Nairobi
+                    </p>
+                  </>
+                )}
               </div>
-              <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-xs hover:bg-sky-600 transition-all shadow-lg shadow-slate-200">
-                <Settings size={16} /> Edit Profile
-              </button>
+              {!isEditing && (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-xs hover:bg-sky-600 transition-all shadow-lg shadow-slate-200"
+                >
+                  <Settings size={16} /> Edit Profile
+                </button>
+              )}
             </div>
             {/* Data Grid: Membership, Miles, SkyID */}
             <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-slate-50">
@@ -196,7 +299,7 @@ export default function Profile() {
                   Total Miles
                 </p>
                 <p className="text-slate-900 font-black italic">
-                  {currentUser.totalMiles.toLocaleString()}
+                  {currentUser.totalMiles.toLocaleString() || 0}
                 </p>
               </div>
               <div className="space-y-1">
@@ -225,9 +328,20 @@ export default function Profile() {
             <h3 className="font-black text-xl mb-2 text-slate-900">
               Flight History
             </h3>
-            <p className="text-slate-400 text-xs mb-6 font-medium">
-              Review your past Domestic and International flights
-            </p>
+            <div className="space-y-2 mb-4">
+              {/* Tiny preview of fetched bookings */}
+              {bookings.slice(0, 2).map((b) => (
+                <div
+                  key={b.id}
+                  className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
+                >
+                  <span>
+                    {b.from} ✈️ {b.to}
+                  </span>
+                  <span className="text-sky-600">{b.bookingDate}</span>
+                </div>
+              ))}
+            </div>
             <button className="w-full py-4 bg-slate-50 hover:bg-slate-100 rounded-2xl font-black text-[10px] transition-all uppercase tracking-widest text-slate-900">
               Download Log
             </button>
