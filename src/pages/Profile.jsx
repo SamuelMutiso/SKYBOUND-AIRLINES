@@ -245,7 +245,7 @@ export default function Profile() {
             <div className="relative -my-16 mb-6">
               <img
                 //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
-                src={currentUser.avatar}
+                src={currentUser?.avatar}
                 alt={currentUser.name}
                 className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
               />
@@ -340,7 +340,7 @@ export default function Profile() {
             </h3>
             <div className="space-y-2 mb-4">
               {/* Tiny preview of fetched bookings */}
-              {bookings.slice(0, 2).map((b) => (
+              {bookings?.slice(0, 2).map((b) => (
                 <div
                   key={b.id}
                   className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
