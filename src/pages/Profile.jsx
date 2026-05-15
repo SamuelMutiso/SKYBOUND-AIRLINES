@@ -27,22 +27,24 @@ export default function Profile() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        //Connects to json-server
-        const userResponse = await fetch(`${API_URL}/users`);
-        const bookingsResponse = await fetch(`${API_URL}/bookings`); //Fetch flight history data
+        //Connects to json-server (both arefired at once, Promise.all optimizing load time)
+        const [userResponse, bookingsResponse] = await Promise.all([
+          fetch(`${API_URL}/users`),
+          fetch(`${API_URL}/bookings`)
+        ]);
         //Manual check for server response status
-        if (!userResponse.ok) {
-          throw new Error("Failed to fetch users data from HQ");
+        if (!userResponse.ok || !bookingsResponse.ok) {
+          throw new Error("Failed to fetch data from SkyBound HQ");
         }
-        if (!bookingsResponse.ok) {
-          throw new Error("Failed to fetch bookings data from HQ");
-        }
-        const userData = await userResponse.json();
-        const bookingsData = await bookingsResponse.json();
+
+        //Parse both JSON bodies in parallel
+        const [userData, bookingsData] = await Promise.all([
+          userResponse.json(),
+          bookingsResponse.json()
+        ]);
 
         setUsers(userData);
-        setBookings(bookingsData); //Store flight history in state
-
+        setBookings(bookingsData);
         /**
          * Phase 4: Persistence Check
          * After fetching users, check if a SkyID is saved in the browser.
@@ -64,7 +66,7 @@ export default function Profile() {
     }
 
     fetchUserData();
-  }, []);
+  }, [API_URL]);
 
   /**
    * Phase 3: Authentication logic
@@ -98,6 +100,7 @@ export default function Profile() {
    */
 
   const handleUpdatedProfile = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch(
         `${API_URL}/users/${currentUser?.id}`,
@@ -113,8 +116,8 @@ export default function Profile() {
         setCurrentUser(updatedUser);
         setUsers(
           users.map((user) =>
-            user.id === updatedUser.id ? updatedUser : user,
-          ),
+            user.id === updatedUser.id ? updatedUser : user
+          )
         ); //Update users array with new name
         setIsEditing(false);
       }
