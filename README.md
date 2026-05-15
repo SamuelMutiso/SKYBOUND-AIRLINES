@@ -9,7 +9,7 @@ SkyBound Airlines is a high-fidelity, client-side single-page application (SPA) 
 - **Bookings.jsx:** Itinerary control interface that manages multi-class flight lifecycle tracking. Implements asynchronous `PATCH` mutation streams and conditional state arrays for immediate garbage collection.
 - **Profile.jsx:** Identity context management dashboard providing direct read-access map views to model profiles.
 
-## 👥 Engineering Roles & Shared Branch Layout
+##  Engineering Roles & Shared Branch Layout
 - **Samuel (MainLayout Architect):** App Shell Framework & Navigation Highlights
 - **Ayman (Home Page Engineer):** Flight Discovery Filtering, Sorting, & POST Transaction
 - **Roy (Itinerary Manager):** Multi-Class Modification (PATCH) & Cancellation Streams (DELETE)
