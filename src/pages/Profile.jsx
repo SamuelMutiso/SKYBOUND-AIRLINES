@@ -7,6 +7,9 @@ import { Award, MapPin, Settings, ChevronRight, Lock, LogOut, Check, X } from 'l
  */
 
 export default function Profile() {
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
   //State management
   const [users, setUsers] = useState([]); //Holds full array of members from db.json
   const [currentUser, setCurrentUser] = useState(null); //Tracks which specific member is currently being viewed
@@ -24,19 +27,24 @@ export default function Profile() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        //Connects to json-server
-        const userResponse = await fetch("http://localhost:3001/users");
-        const bookingsResponse = await fetch("http://localhost:3001/bookings"); //Fetch flight history data
+        //Connects to json-server (both arefired at once, Promise.all optimizing load time)
+        const [userResponse, bookingsResponse] = await Promise.all([
+          fetch(`${API_URL}/users`),
+          fetch(`${API_URL}/bookings`)
+        ]);
         //Manual check for server response status
         if (!userResponse.ok || !bookingsResponse.ok) {
-          throw new Error("Connection to HQ Failed");
+          throw new Error("Failed to fetch data from SkyBound HQ");
         }
-        const userData = await userResponse.json();
-        const bookingsData = await bookingsResponse.json();
+
+        //Parse both JSON bodies in parallel
+        const [userData, bookingsData] = await Promise.all([
+          userResponse.json(),
+          bookingsResponse.json()
+        ]);
 
         setUsers(userData);
-        setBookings(bookingsData); //Store flight history in state
-
+        setBookings(bookingsData);
         /**
          * Phase 4: Persistence Check
          * After fetching users, check if a SkyID is saved in the browser.
@@ -58,7 +66,7 @@ export default function Profile() {
     }
 
     fetchUserData();
-  }, []);
+  }, [API_URL]);
 
   /**
    * Phase 3: Authentication logic
@@ -70,7 +78,7 @@ export default function Profile() {
     const auth = emailInput.trim().toLowerCase();
     //Search our fetched users for a case-insensitive email match
     const authenticatedUser = users.find(
-      (user) => user.email?.toLowerCase() === auth,
+      (user) => user.email?.toLowerCase() === auth
     );
 
     if (authenticatedUser) {
@@ -92,9 +100,10 @@ export default function Profile() {
    */
 
   const handleUpdatedProfile = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${currentUser.id}`,
+        `${API_URL}/users/${currentUser?.id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -107,8 +116,8 @@ export default function Profile() {
         setCurrentUser(updatedUser);
         setUsers(
           users.map((user) =>
-            user.id === updatedUser.id ? updatedUser : user,
-          ),
+            user.id === updatedUser.id ? updatedUser : user
+          )
         ); //Update users array with new name
         setIsEditing(false);
       }
@@ -192,31 +201,35 @@ export default function Profile() {
         </h3>
         <nav className="bg-white rounded-4xl border border-slate-100 p-2 shadow-sm">
           {/* Dynamic Sidebar: maps through all squad members and applies "active" styling if ID matches 'currentUser' */}
-          {users.map((user) => (
-            <button
-              key={user.id}
-              onClick={() => {
-                setCurrentUser(user);
-                setEditName(user.name); //Updates view to clicked user
-                setIsEditing(false); //Closes edit box automatically
-              }}
-              className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
-                currentUser.id === user.id
-                  ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
-                  : "text-slate-400 hover:bg-slate-50" //Status: Inactive
-              }`}
-            >
-              <img
-                src={user.avatar}
-                alt={user.name}
-                className="w-8 h-8 rounded-lg object-cover grayscale-0 contrast-125"
-              />
-              <span className="text-xs font-black text-left flex-1">
-                {user.name.split(" ")[0]}
-              </span>
-              {currentUser.id === user.id && <ChevronRight size={14} />}
-            </button>
-          ))}
+          {users && users.length > 0 ? (
+            users.map((user) => (
+              <button
+                key={user.id}
+                onClick={() => {
+                  setCurrentUser(user);
+                  setEditName(user.name); //Updates view to clicked user
+                  setIsEditing(false); //Closes edit box automatically
+                }}
+                className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all ${
+                  currentUser?.id === user.id
+                    ? "bg-sky-50 text-sky-600 shadow-inner" //Status: Active
+                    : "text-slate-400 hover:bg-slate-50" //Status: Inactive
+                }`}
+              >
+                <img
+                  src={user.avatar || "https://via.placeholder.com/32"}
+                  alt={user.name || "User"}
+                  className="w-8 h-8 rounded-lg object-cover grayscale-0 contrast-125"
+                />
+                <span className="text-xs font-black text-left flex-1">
+                  {user.name ? user.name.split(" ")[0] : "User"}
+                </span>
+                {currentUser?.id === user.id && <ChevronRight size={14} />}
+              </button>
+            ))
+          ) : (
+            <p className="text-slate-400 text-xs p-4">Loading squad...</p>
+          )}
         </nav>
         {/* Logout Button */}
         <button
@@ -238,8 +251,8 @@ export default function Profile() {
             <div className="relative -my-16 mb-6">
               <img
                 //Reactive view: All profile details are bound to currentUser state; clicking the sidebar triggers a re-render with new data
-                src={currentUser.avatar}
-                alt={currentUser.name}
+                src={currentUser?.avatar}
+                alt={currentUser?.name}
                 className="w-32 h-32 rounded-[2.5rem] border-8 border-white shadow-xl object-cover"
               />
               <div className="absolute bottom-0 left-24 bg-emerald-500 border-4 border-white w-8 h-8 rounded-full"></div>
@@ -269,7 +282,7 @@ export default function Profile() {
                 ) : (
                   <>
                     <h1 className="text-3xl font-black text-slate-900 tracking-tighter">
-                      {currentUser.name}
+                      {currentUser?.name}
                     </h1>
                     <p className="text-slate-400 font-bold flex items-center gap-2 text-sm">
                       <MapPin size={16} /> SkyBound HQ, Nairobi
@@ -293,7 +306,7 @@ export default function Profile() {
                   Membership
                 </p>
                 <p className="text-sky-600 font-black flex items-center gap-2">
-                  <Award size={18} /> {currentUser.tier}
+                  <Award size={18} /> {currentUser?.tier}
                 </p>
               </div>
               <div className="space-y-1">
@@ -310,7 +323,7 @@ export default function Profile() {
                   SkyID
                 </p>
                 <p className="text-slate-900 font-bold text-sm underline opacity-60">
-                  {currentUser.email}
+                  {currentUser?.email}
                 </p>
               </div>
             </div>
@@ -333,7 +346,7 @@ export default function Profile() {
             </h3>
             <div className="space-y-2 mb-4">
               {/* Tiny preview of fetched bookings */}
-              {bookings.slice(0, 2).map((b) => (
+              {bookings?.slice(0, 2).map((b) => (
                 <div
                   key={b.id}
                   className="text-[10px] font-bold text-slate-500 flex justify-between border-b border-slate-50 pb-1"
