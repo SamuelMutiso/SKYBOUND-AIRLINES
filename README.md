@@ -1,16 +1,22 @@
-# React + Vite
+# SkyBound Airlines – Distributed Flight Management Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SkyBound Airlines is a high-fidelity, client-side single-page application (SPA) engineered using React, Vite, and Tailwind CSS, coupled with an asynchronous mock REST API layer powered by `json-server`. 
 
-Currently, two official plugins are available:
+##  Architecture & Core Components
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **MainLayout.jsx:** The persistent structural engine of the application. Manages consistent global headers and semantic layouts while leveraging React Router `useLocation` to compute navigation states and matching tree configurations.
+- **Home.jsx:** The primary flight discovery and transaction module. Features dynamic in-memory client-side data streaming, a dual-layer string filtering array, and an object destructuring system for posting safe records.
+- **Bookings.jsx:** Itinerary control interface that manages multi-class flight lifecycle tracking. Implements asynchronous `PATCH` mutation streams and conditional state arrays for immediate garbage collection.
+- **Profile.jsx:** Identity context management dashboard providing direct read-access map views to model profiles.
 
-## React Compiler
+## 👥 Engineering Roles & Shared Branch Layout
+- **Samuel (MainLayout Architect):** App Shell Framework & Navigation Highlights
+- **Ayman (Home Page Engineer):** Flight Discovery Filtering, Sorting, & POST Transaction
+- **Roy (Itinerary Manager):** Multi-Class Modification (PATCH) & Cancellation Streams (DELETE)
+- **Caleb (Identity Lead):** Squad Identity Hub Mapping & User Context Views
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+##  Execution Guide
+1. Install core runtime dependencies: `npm install`
+2. Launch the JSON database server: `npx json-server --watch db.json --port 3001`
+3. Spin up the client compiler: `npm run dev`
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
